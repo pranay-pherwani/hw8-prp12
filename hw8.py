@@ -26,6 +26,10 @@ def crossover(parent1, parent2):
 mutation operation for genetic algorithm
 """
 def mutation(genome, mutRate):
+    # Flip the bit in the genome with chance mutRate
+    for k in range(len(genome)):
+        if random.random()<mutRate:
+            genome[k]=1-genome[k]
     return genome
 
 """
