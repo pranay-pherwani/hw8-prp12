@@ -44,7 +44,7 @@ def selection(pop):
             return org
     # If none of them do, return the last org in pop
     return pop[-1]
-    
+
 """
 calcFit will calculate the fitness of an organism
 """
@@ -96,6 +96,24 @@ def calcFit(org, xVals, yVals):
 accPop will calculate the fitness and accFit of the population
 """
 def accPop(pop, xVals, yVals):
+    # Initialize total fitness
+    totalFitness = 0
+    # Calculate and set the fitness for each org in pop
+    for org in pop:
+        fit = calcFit(org,xVals,yVals)
+        # Add the fitness to the total
+        totalFitness+=fit
+        org.fitness = fit
+    # Sort the population in descending order of fitness
+    pop.sort(reverse=True)
+    # Calculate and set normalized fitness values for each org in pop
+    for org in pop:
+        org.normFit = org.fitness/totalFitness
+    # Calculate accumulated fitness for each org in pop
+    accum = 0
+    for org in pop:
+        accum+=org.normFit
+        org.accFit=accum
     return pop
 
 """
