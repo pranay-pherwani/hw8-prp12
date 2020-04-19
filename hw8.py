@@ -36,8 +36,15 @@ def mutation(genome, mutRate):
 selection operation for choosing a parent for mating from the population
 """
 def selection(pop):
-    return org
-
+    # Pick a random between 0 and 1
+    k = random.random()
+    # Find the first org in pop to have accFit>k
+    for org in pop:
+        if org.accFit>k:
+            return org
+    # If none of them do, return the last org in pop
+    return pop[-1]
+    
 """
 calcFit will calculate the fitness of an organism
 """
