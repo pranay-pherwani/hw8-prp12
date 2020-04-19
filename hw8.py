@@ -14,6 +14,12 @@ import matplotlib.pyplot as plt
 crossover operation for genetic algorithm
 """
 def crossover(parent1, parent2):
+    # determine random index k
+    k = random.randint(0,len(parent1)-1)
+    # create child 1
+    child1 = parent1[:k]+parent2[k:]
+    # create child 2
+    child2 = parent2[:k]+parent1[k:]
     return (child1, child2)
 
 """
