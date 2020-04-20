@@ -148,6 +148,27 @@ def initPop(size, numCoeffs):
 nextGeneration will create the next generation
 """
 def nextGeneration(pop, numCoeffs, mutRate, eliteNum):
+    # Initialize new population list
+    newPop = []
+    for k in range((len(pop)-eliteNum)//2):
+        # Select 2 parents
+        parent1 = selection(pop)
+        parent2 = selection(pop)
+        # Ensure the parents are not the same organism
+        while(parent1.isClone(parent2)):
+            parent2 = selection(pop)
+        # Create 2 children and set their genomes
+        (child1, child2) = (Organism(numCoeffs),Organism(numCoeffs))
+        (child1.bits, child2.bits) = crossover(parent1.bits,parent2.bits)
+        # Mutate genome of both children
+        mutation(child1.bits,mutRate)
+        mutation(child2.bits,mutRate)
+        # Append children to newPop
+        newPop.append(child1)
+        newPop.append(child2)
+    # Append best eliteNum orgs to newPop
+    for k in range(eliteNum):
+        newPop.append(pop[-(k+1)])
     return newPop
 
 """
