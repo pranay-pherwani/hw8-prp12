@@ -168,7 +168,7 @@ def nextGeneration(pop, numCoeffs, mutRate, eliteNum):
         newPop.append(child2)
     # Append best eliteNum orgs to newPop
     for k in range(eliteNum):
-        newPop.append(pop[-(k+1)])
+        newPop.append(pop[k])
     return newPop
 
 """
@@ -190,6 +190,36 @@ best: the bestN number of best organisms seen over the course of the GA
 fit:  the highest observed fitness value for each iteration
 """
 def GA(k, size, numCoeffs, mutRate, xVals, yVals, eliteNum, bestN):
+    # Create initial population
+    population = initPop(size,numCoeffs)
+    # Get accumulated fitnesses for this initial population
+    population = accPop(population, xVals, yVals)
+    # Set current best list to the first BestN orgs
+    best = initial[:bestN]
+    # Initialize fit list
+    fit = [0]*(k+1)
+    fit[0]=best[0].fitness
+    # Loop over generations
+    for i in range(k):
+        # Create new generation and calulate accumulated fitness values
+        population = nextGeneration(population,numCoeffs,mutRate,eliteNum)
+        population = accPop(population, xVals, yVals)
+        # Look at the top bestN organisms of this generation to see if we
+        # need to replace some or all of the best organisms seen so far.
+        for ind in range(bestN):
+            # First, make sure this individual is not already in the list.
+            inBest = False
+            for bOrg in best:
+                if bOrg.isClone(pop[ind]):
+                    inBest = True
+                    break
+            # Compare this individual to the worst of the best: best[-1].
+            if pop[ind].fitness > best[-1].fitness and not inBest:
+                # Replace that individual and resort the list.
+                best[-1] = pop[ind]
+                best.sort(reverse=True)
+        # Store the best fitness value in fit list
+        fit[i+1]=best[0].fitness
     return (best,fit)
 
 """
