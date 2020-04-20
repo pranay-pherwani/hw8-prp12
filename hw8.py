@@ -1,8 +1,8 @@
 """
 hw8.py
-Name(s):
-NetId(s):
-Date:
+Name(s): Pranay Pherwani
+NetId(s): prp12
+Date: 4/19/20
 """
 
 import math
@@ -158,7 +158,7 @@ def nextGeneration(pop, numCoeffs, mutRate, eliteNum):
         while(parent1.isClone(parent2)):
             parent2 = selection(pop)
         # Create 2 children and set their genomes
-        (child1, child2) = (Organism(numCoeffs),Organism(numCoeffs))
+        (child1, child2) = (Org.Organism(numCoeffs),Org.Organism(numCoeffs))
         (child1.bits, child2.bits) = crossover(parent1.bits,parent2.bits)
         # Mutate genome of both children
         mutation(child1.bits,mutRate)
@@ -191,19 +191,19 @@ fit:  the highest observed fitness value for each iteration
 """
 def GA(k, size, numCoeffs, mutRate, xVals, yVals, eliteNum, bestN):
     # Create initial population
-    population = initPop(size,numCoeffs)
+    pop = initPop(size,numCoeffs)
     # Get accumulated fitnesses for this initial population
-    population = accPop(population, xVals, yVals)
+    pop = accPop(pop, xVals, yVals)
     # Set current best list to the first BestN orgs
-    best = initial[:bestN]
+    best = pop[:bestN]
     # Initialize fit list
     fit = [0]*(k+1)
     fit[0]=best[0].fitness
     # Loop over generations
     for i in range(k):
         # Create new generation and calulate accumulated fitness values
-        population = nextGeneration(population,numCoeffs,mutRate,eliteNum)
-        population = accPop(population, xVals, yVals)
+        pop = nextGeneration(pop,numCoeffs,mutRate,eliteNum)
+        pop = accPop(pop, xVals, yVals)
         # Look at the top bestN organisms of this generation to see if we
         # need to replace some or all of the best organisms seen so far.
         for ind in range(bestN):
