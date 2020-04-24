@@ -12,6 +12,14 @@ import matplotlib.pyplot as plt
 
 """
 crossover operation for genetic algorithm
+
+INPUTS
+parent1:    the first parent organism
+parent2     the second parent organism
+
+OUTPUTS
+child1:     the first child organism
+child2:     the second child organism
 """
 def crossover(parent1, parent2):
     # determine random index k
@@ -24,6 +32,13 @@ def crossover(parent1, parent2):
 
 """
 mutation operation for genetic algorithm
+
+INPUTS
+genome:     an organism's genome
+mutRate:    the mutation rate
+
+OUTPUTS
+genome:     the mutated genome
 """
 def mutation(genome, mutRate):
     # Flip the bit in the genome with chance mutRate
@@ -34,6 +49,12 @@ def mutation(genome, mutRate):
 
 """
 selection operation for choosing a parent for mating from the population
+
+INPUTS
+pop:    the organism population
+
+OUTPUTS
+org:    the selected organism
 """
 def selection(pop):
     # Pick a random between 0 and 1
@@ -47,6 +68,14 @@ def selection(pop):
 
 """
 calcFit will calculate the fitness of an organism
+
+INPUTS
+org:    the organism
+xVals:     the x values for the fitting
+yVals:     the y values for the fitting
+
+OUTPUTS
+fitness:    the organism's fitness
 """
 def calcFit(org, xVals, yVals):
     # Create a variable to store the running sum error.
@@ -94,6 +123,14 @@ def calcFit(org, xVals, yVals):
 
 """
 accPop will calculate the fitness and accFit of the population
+
+INPUTS
+pop:       the organism population
+xVals:     the x values for the fitting
+yVals:     the y values for the fitting
+
+OUTPUTS
+pop:        the organism population after accumulated fitness values are calculated
 """
 def accPop(pop, xVals, yVals):
     # Initialize total fitness
@@ -118,6 +155,13 @@ def accPop(pop, xVals, yVals):
 
 """
 initPop will initialize a population of a given size and number of coefficients
+
+INPUTS
+size:       the size of the population
+numCoeffs:  the number of coefficients in our polynomials
+
+OUTPUTS
+pop:        the generated initial population
 """
 def initPop(size, numCoeffs):
     # Get size-4 random organisms in a list.
@@ -146,6 +190,15 @@ def initPop(size, numCoeffs):
 
 """
 nextGeneration will create the next generation
+
+INPUTS
+pop:        the current organism population
+numCoeffs:  the number of coefficients in our polynomials
+mutRate:    the mutation rate
+eliteNum:   the number of elite individuals to keep per generation
+
+OUTPUTS
+newPop:     the new organism population
 """
 def nextGeneration(pop, numCoeffs, mutRate, eliteNum):
     # Initialize new population list
@@ -248,7 +301,7 @@ def runScenario(scenario, k, size, numCoeffs, mutRate, \
     plt.title('Best Fitness per Generation')
     plt.xlabel('Generation')
     plt.ylabel('Best Fitness')
-    plt.savefig('fitA.png', bbox_inches='tight')
+    plt.savefig('fit' + scenario + '.png', bbox_inches='tight')
     plt.close('all')
 
     # Return the best organisms.
